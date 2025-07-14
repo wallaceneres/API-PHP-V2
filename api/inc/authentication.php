@@ -9,7 +9,7 @@
             'status' => 'ERROR',
             'message' => 'Invalid access.'
         ]);
-        return;
+        exit();
     }
 
     $usuarios = [
@@ -50,14 +50,6 @@
             'status' => 'ERROR',
             'message' => 'Invalid athentication credentials.'
         ]);
-        return;
+        exit();
     }
-
-    //autenticacao valida
-    
-    echo json_encode([
-        'message' => 'Welcome to this API.',
-        'status' => 'Success'
-    ]
-    );
 

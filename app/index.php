@@ -8,7 +8,8 @@ $variaveis = [
     'id' => '1'
 ];
 
-api_request('get_datetime', '', '', 'GET', $variaveis);
+$resultados = api_request('get_datetime','','','GET',$variaveis);
+print_r($resultados);
 
 function api_request($endpoint, $user = null, $pass = null, $method = 'GET', $variables = [])
 {
