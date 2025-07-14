@@ -8,7 +8,7 @@ $variaveis = [
     'id' => '1'
 ];
 
-$resultados = api_request('get_datetime','','','GET',$variaveis);
+$resultados = api_request('get_datetime', API_USER, API_PASS, 'GET', $variaveis);
 print_r($resultados);
 
 function api_request($endpoint, $user = null, $pass = null, $method = 'GET', $variables = [])
@@ -16,7 +16,7 @@ function api_request($endpoint, $user = null, $pass = null, $method = 'GET', $va
     $curl = curl_init();
     $headers = array(
         'Content-Type: application/json',
-        'Authorization: Basic ' . base64_encode(API_USER . ':' . API_PASS)
+        'Authorization: Basic ' . base64_encode($user. ':' . $pass)
     );
 
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);

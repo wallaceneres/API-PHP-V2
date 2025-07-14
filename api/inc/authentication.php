@@ -20,14 +20,24 @@
     $db = new database();
 
     $params = [
-        ':user' => $user = $_SERVER['PHP_AUTH_USER'],
-        ':pass' => $pass = $_SERVER['PHP_AUTH_PW']
+        ':user' => $user = $_SERVER['PHP_AUTH_USER']
     ];
 
-    $results = $db->EXE_QUERY("SELECT id_client FROM `authentication` WHERE username=:user AND pass=:pass", $params);
+    $results = $db->EXE_QUERY("SELECT * FROM `authentication` WHERE username=:user", $params);
     if(count($results) > 0)
     {
-        $valid_authentication = true;
+        //verificar se a senha é valida
+
+        $usuario = $results[0];
+
+        if (password_verify($_SERVER['PHP_AUTH_PW'], $usuario['pass']))
+        {
+            $valid_authentication = true;
+        }else
+        {
+            $valid_authentication = false;
+        }
+
     }else{
         $valid_authentication = false;
     }
