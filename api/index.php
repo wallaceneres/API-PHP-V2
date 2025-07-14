@@ -54,6 +54,7 @@
     }
 
     //autenticacao valida
+    
     echo json_encode([
         'message' => 'Welcome to this API.',
         'status' => 'Success'
