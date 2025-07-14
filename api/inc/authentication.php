@@ -1,7 +1,7 @@
 <?php
 
     //verifica se o user e pass vieram com o request HTTP
-
+    
     if(empty($_SERVER['PHP_AUTH_USER']) ||
        empty($_SERVER['PHP_AUTH_PW']))
     {
@@ -12,34 +12,24 @@
         exit();
     }
 
-    $usuarios = [
-        [
-            'user' => 'Joao',
-            'pass' => 'abc123'
-        ],
-        [
-            'user' => 'Ana',
-            'pass' => 'abc456'
-        ],
-        [
-            'user' => 'Pedro',
-            'pass' => 'abc456'
-        ]
+    //verifica se a autenticacao é valida
+
+    require_once('config.php');
+    require_once('database.php');
+
+    $db = new database();
+
+    $params = [
+        ':user' => $user = $_SERVER['PHP_AUTH_USER'],
+        ':pass' => $pass = $_SERVER['PHP_AUTH_PW']
     ];
 
-    //verifica se user e pass tem autenticação valida
-
-    $user = $_SERVER['PHP_AUTH_USER'];
-    $pass = $_SERVER['PHP_AUTH_PW'];
-
-    $valid_authentication = false;
-
-    foreach($usuarios as $usuario)
+    $results = $db->EXE_QUERY("SELECT id_client FROM `authentication` WHERE username=:user AND pass=:pass", $params);
+    if(count($results) > 0)
     {
-        if($usuario['user'] == $user && $usuario['pass'] == $pass)
-        {
-            $valid_authentication = true;
-        }
+        $valid_authentication = true;
+    }else{
+        $valid_authentication = false;
     }
 
     //autenticacao invalida
