@@ -2,17 +2,18 @@
     defined('ROOT') or die('Acesso inválido');
 ?>
 
+
 <div class="container">
     <div class="row my-5">
         <div class="col-sm-4 offset-sm-4 card bg-light p-3">
             <form action="index.php" method="post">
                 <div class="mb-3">
                     <label class="form-label">Usuário:</label>
-                    <input type="text" name="text_usuario" class="form-control">
+                    <input type="text" name="text_usuario" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Senha:</label>
-                    <input type="password" name="text_senha" class="form-control">
+                    <input type="password" name="text_senha" class="form-control" required>
                 </div>
 
                 <div class="text-center">

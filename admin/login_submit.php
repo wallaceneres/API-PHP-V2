@@ -19,5 +19,33 @@
         header('Location: index.php');
     }
 
-    echo 'OK';
+    $bd = new database();
+
+    $params = [
+        ':usuario' => $usuario
+    ];
+
+    $resultados = $bd->EXE_QUERY("SELECT * FROM admin_users WHERE username = :usuario" , $params);
+
+    if(count($resultados) == 0 )
+    {
+        $_SESSION['error'] = 'Login Inválido';
+        header('Location: index.php');
+        return;
+    }
+
+    //validar senha
+
+    if(!password_verify($senha, $resultados[0]['pass']))
+    {
+        //senha incorreta
+        $_SESSION['error'] = 'Login Inválido';
+        header('Location: index.php');
+        return;
+    }
+
+    $_SESSION['id_admin'] = $resultados[0]['id_admin'];
+    $_SESSION['usuario'] = $resultados[0]['username'];
+
+    header('Location: index.php');
 ?>

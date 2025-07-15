@@ -12,6 +12,8 @@
 
     //definir rota
 
+    $rota = '';
+
     if(!isset($_SESSION['id_admin']) && $_SERVER['REQUEST_METHOD'] != 'POST')
     {
         $rota = 'login';
@@ -20,6 +22,8 @@
         $rota = 'login_submit';
     }else
     {
+        // interior do backoffice
+        $rota = 'home';
 
     }
 
@@ -30,6 +34,10 @@
         
         case 'login_submit':
             require_once('login_submit.php');
+            break;
+        
+        case 'home':
+            require_once('bo/home.php');
             break;
 
         default:
