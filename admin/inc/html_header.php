@@ -1,3 +1,6 @@
+<?php
+    defined('ROOT') or die('Acesso inválido');
+?>
 <!DOCTYPE html>
 <html lang="pt-Br">
 <head>
