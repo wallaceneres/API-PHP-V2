@@ -25,6 +25,12 @@
         // interior do backoffice
         $rota = 'home';
 
+        //se existir uma rota explicitamente definida
+        if(isset($_GET['r']))
+        {
+            $rota = $_GET['r'];
+        }
+
     }
 
     switch ($rota) {
@@ -38,6 +44,10 @@
         
         case 'home':
             require_once('bo/home.php');
+            break;
+
+        case 'new_client':
+            require_once('bo/new_client.php');
             break;
 
         default:
