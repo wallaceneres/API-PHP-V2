@@ -16,6 +16,7 @@
         */
 
         $error = '';
+        $success = '';
 
         if(!isset($_POST['text_cliente']) || 
         !isset($_POST['text_usuario']) || 
@@ -34,27 +35,42 @@
             $bd = new database();
 
             $parametros = [
-                ':cliente' => $cliente
+                ':cliente' => $cliente,
+                ':username' => $usuario
             ];
 
-            $resultados = $bd->EXE_QUERY("SELECT * FROM authentication WHERE client_name = :cliente", $parametros);
+            $resultados = $bd->EXE_QUERY("SELECT * FROM authentication WHERE client_name = :cliente OR username = :username", $parametros);
 
             if(!empty($resultados)){
-                $error = "Já existe um cliente com o mesmo nome";
-            }  
-        }
+                $error = "Já existe um cliente com o mesmo nome ou username";
+            }else{
+            
+                $parametros = [
+                ':client_name' => $cliente,
+                ':username' => $usuario,
+                ':pass' => password_hash($senha, PASSWORD_DEFAULT)
+                ];
 
-        if(empty($error))
-        {
-            die('OK');
-        }
+                $bd->EXE_NON_QUERY("INSERT INTO authentication
+                                        VALUES (
+                                            0, 
+                                            :client_name, 
+                                            :username, 
+                                            :pass, 
+                                            NOW(), 
+                                            NOW(), 
+                                            null)",
+                                            $parametros);
 
+                $success = 'Novo cliente adicionado com sucesso.';
+            }
+        }
     }
     ?>
 
 <div class="container">
     <div class="row mt-5">
-        <div class="col-sm-6 offset-sm-3">
+        <div class="col-sm-8 offset-sm-2">
 
             <form action="?r=new_client" method="post">
                 <h3 class="text-center">Novo Cliente</h3>
@@ -73,7 +89,7 @@
                 </div>
 
                 <div class="mb3 text-end" onclick="gerarUsuarioPassword()">
-                    <button class="btn btn-primary">Atualizar</button>
+                    <button type="button" class="btn btn-primary">Atualizar</button>
                 </div>
 
                 <div class="mb-3 text-center">
@@ -86,6 +102,17 @@
                 <p class="alert alert-danger p-2 text-center">
                     <?= $error ?>
                 </p>
+            <?php endif; ?>
+
+            <?php if(!empty($success)): ?>
+                <p class="alert alert-success p-2 text-center">
+                    <?= $success ?>
+                </p>
+                <div class="mt-3 card p-2 bg-light">
+                    <p>Cliente:</p><?= $cliente ?>
+                    <p>Username:</p><?= $usuario ?>
+                    <p>Password:</p><?= $senha ?>
+                </div>
             <?php endif; ?>
 
         </div>
