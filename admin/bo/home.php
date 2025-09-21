@@ -8,7 +8,7 @@
 
         $db = new database();
 
-        $clientes_da_api = $db->EXE_QUERY("SELECT * FROM authentication");
+        $clientes_da_api = $db->EXE_QUERY("SELECT * FROM authentication WHERE deleted_at is null");
     ?>
 
     <div class="container mt-5">
@@ -29,7 +29,8 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th>Cliente</th>
-                                    <th>Chave</th>
+                                    <th>Chave | Username</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,6 +38,9 @@
                                     <tr>
                                         <td><?= $cliente_da_api['client_name'] ?></td>
                                         <td><?= $cliente_da_api['username'] ?></td>
+                                        <td class="text-end">
+                                            <a href="?r=delete_client&id=<?= $cliente_da_api['id_client']?>">Eliminar</a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

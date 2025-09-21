@@ -49,6 +49,10 @@
         case 'new_client':
             require_once('bo/new_client.php');
             break;
+        
+        case 'delete_client':
+        require_once('bo/delete_client.php');
+        break;
 
         default:
             echo "Rota não definida";
