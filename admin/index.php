@@ -51,8 +51,16 @@
             break;
         
         case 'delete_client':
-        require_once('bo/delete_client.php');
-        break;
+            require_once('bo/delete_client.php');
+            break;
+
+        case 'delete_client_ok':
+            require_once('bo/delete_client_ok.php');
+            break;
+
+        case 'restore_client':
+            require_once('bo/restore_client.php');
+            break;
 
         default:
             echo "Rota não definida";

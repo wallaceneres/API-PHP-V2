@@ -8,7 +8,7 @@
 
         $db = new database();
 
-        $clientes_da_api = $db->EXE_QUERY("SELECT * FROM authentication WHERE deleted_at is null");
+        $clientes_da_api = $db->EXE_QUERY("SELECT * FROM authentication");
     ?>
 
     <div class="container mt-5">
@@ -36,10 +36,17 @@
                             <tbody>
                                 <?php foreach($clientes_da_api as $cliente_da_api): ?>
                                     <tr>
-                                        <td><?= $cliente_da_api['client_name'] ?></td>
+                                        <td class="<?= empty($cliente_da_api['deleted_at']) ? "" : "text-danger"?>">
+                                            <?= empty($cliente_da_api['deleted_at']) ? "" : "&#9888"?>
+                                            <?= $cliente_da_api['client_name'] ?>
+                                        </td>
                                         <td><?= $cliente_da_api['username'] ?></td>
                                         <td class="text-end">
-                                            <a href="?r=delete_client&id=<?= $cliente_da_api['id_client']?>">Eliminar</a>
+                                            <?php if($cliente_da_api['deleted_at'] == null) : ?>
+                                                <a href="?r=delete_client&id=<?= $cliente_da_api['id_client']?>">Eliminar</a>
+                                            <?php else: ?>
+                                                <a href="?r=restore_client&id=<?= $cliente_da_api['id_client']?>">Restaurar</a>
+                                            <?php endif;?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

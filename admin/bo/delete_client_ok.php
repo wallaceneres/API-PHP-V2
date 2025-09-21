@@ -26,7 +26,12 @@
         if(empty($resultados))
         {
             $error = "Não existe o registro indicado";
-        }   
+        }else{
+            $bd->EXE_NON_QUERY("UPDATE authentication SET deleted_at = NOW() WHERE id_client = :id_client",$parametros);
+
+            header("Location: index.php");
+            return;
+        }
 
     }
  
@@ -37,20 +42,6 @@
         <div class="col-sm-6 offset-sm-3 text-center">
             <p class="alert alert-danger"><?=$error?></p>
             <a href="index.php" class="btn btn-primary">Voltar</a>
-        </div>
-    </div>
-<?php else: ?>
-    <div class="row my-5">
-        <div class="col-sm-6 offset-3 text-center">
-            <p>Pretende elimitar o registro?</p>
-            <p>Cliente: <?= $resultados[0]['client_name']?></p>
-            <p>Usuario: <?= $resultados[0]['username']?></p>
-
-            <div class="mt-3">
-                <a href="index.php" class="btn btn-primary">Não</a>
-                <a href="?r=delete_client_ok&id=<?= $resultados[0]['id_client']?>" class="btn btn-danger">Sim</a>
-
-            </div>
         </div>
     </div>
 <?php endif; ?>
