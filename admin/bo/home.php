@@ -47,7 +47,9 @@
                                             <?php else: ?>
                                                 <a href="?r=restore_client&id=<?= $cliente_da_api['id_client']?>">Restaurar</a>
                                             <?php endif;?>
-                                        </td>
+                                                <span class="mx-2">|</span>
+                                                    <a href="?r=edit_client&id=<?= $cliente_da_api['id_client']?>">Editar</a> 
+                                            </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

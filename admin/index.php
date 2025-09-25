@@ -62,6 +62,10 @@
             require_once('bo/restore_client.php');
             break;
 
+        case 'edit_client':
+            require_once('bo/edit_client.php');
+            break;
+
         default:
             echo "Rota não definida";
             break;
